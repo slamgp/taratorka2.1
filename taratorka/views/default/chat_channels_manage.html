@@ -1,0 +1,14 @@
+{{extend 'layout.html'}}
+<html>
+    <head><h1>{{=message}}</h1> </head>
+    <form>
+        <body>
+            {{for chanel in chanales:}}
+            {{=LI(A(chanel.f_name, _href=URL('default','posts_manage', args=chanel.id)))}}
+            {{pass}}
+        <form>
+            <input name = "chanel_name"  size = 120 maxlenght = 120> </imput>
+            <input name = "btn_create" type = "submit" value = "  Create chamel  "> </input>
+        </form>
+        </body>
+</html>

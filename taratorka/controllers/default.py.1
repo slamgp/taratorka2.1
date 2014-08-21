@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+### required - do no delete
+def user(): return dict(form=auth())
+def download(): return response.download(request,db)
+def call(): return service()
+### end requires
+def index():
+    return dict(message = "You are welcomed taratorka")
+
+def error():
+    return dict()
+
+@auth.requires_login()
+def chat_channels_manage():
+    return dict(message = "Select the channel")
+
+@auth.requires_login()
+def posts_manage():
+ #  form = SQLFORM.smartgrid(db.t_posts,onupdate=auth.archive)
+ #  return locals()
+    if request.vars.btn_send:
+        # return dict(message = "Write messages")
+        db.t_posts.insert(f_post_text = request.vars.post_text)
+        rows = db().select()
+        str = '';
+        for row in rows:
+            str = str + row.created_by + ': ' + row.f_post_text + '/n'
+        return dict(post_text = str)
+    else:
+       return dict(message = "Write messages")

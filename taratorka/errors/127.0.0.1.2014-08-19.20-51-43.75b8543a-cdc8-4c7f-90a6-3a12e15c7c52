@@ -1,0 +1,21 @@
+(dp1
+S'output'
+p2
+S"<type 'exceptions.RuntimeError'> Cannot compare auth_user.id > None"
+p3
+sS'layer'
+p4
+S'C:\\Python27\\web2py\\applications\\taratorka\\controllers/default.py'
+p5
+sS'code'
+p6
+S'# -*- coding: utf-8 -*-\n### required - do no delete\ndef user(): return dict(form=auth())\ndef download(): return response.download(request,db)\ndef call(): return service()\n### end requires\ndef index():\n    return dict(message = "You are welcomed taratorka")\n\ndef error():\n    return dict()\n\n@auth.requires_login()\ndef chat_channels_manage():\n    return dict(message = "Select the channel")\n\n@auth.requires_login()\ndef posts_manage():\n #  form = SQLFORM.smartgrid(db.t_posts,onupdate=auth.archive)\n #  return locals()\n    if request.vars.btn_send:\n        # return dict(message = "Write messages")\n        db.t_posts.insert(f_post_text = request.vars.post_text)\n        rows = db(db.t_posts.id>0).select()\n        str = \'\';\n        for row in rows:\n            str = str + row.f_post_text + \'\\n\'\n        return dict(message = "Write messages", text = str)\n    else:\n        rows = db(db.t_posts.id>0).select()\n        str = \'\';\n        for row in rows:\n            rowsUser = db(db.auth_user.id > row.created_by).select()\n            for rowUser in rowsUser:\n                request.barrrr = rowUser.first_name\n            str = str    + row.f_post_text  +  \'\\n\'\n        return dict(message = "Write messages", text = str)\n\nresponse._vars=response._caller(posts_manage)\n'
+p7
+sS'snapshot'
+p8
+(dp9
+sS'traceback'
+p10
+S'Traceback (most recent call last):\n  File "/home/mdipierro/make_web2py/web2py/gluon/restricted.py", line 220, in restricted\n  File "C:\\Python27\\web2py\\applications\\taratorka\\controllers/default.py", line 39, in <module>\n  File "/home/mdipierro/make_web2py/web2py/gluon/globals.py", line 385, in <lambda>\n  File "/home/mdipierro/make_web2py/web2py/gluon/tools.py", line 3287, in f\n  File "C:\\Python27\\web2py\\applications\\taratorka\\controllers/default.py", line 33, in posts_manage\n    rowsUser = db(db.auth_user.id > row.created_by).select()\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 10525, in select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 2458, in select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1869, in select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1774, in _select\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1543, in expand\n  File "/home/mdipierro/make_web2py/web2py/gluon/dal.py", line 1460, in GT\nRuntimeError: Cannot compare auth_user.id > None\n'
+p11
+s.

@@ -1,0 +1,30 @@
+{{extend 'layout.html'}}
+
+<html>
+    <head><h1>{{=message}}</h1> </head>
+        <body>
+           <form  id = "formInput" name = "formInput"  ajax=True >
+            <textarea id = "post_table" name = "post_table" rows = 10 cols= 120 readonly> {{=text}} </textarea>
+            <input id = "post_text"  name = "post_text" ></imput>
+            <input name = "btn_send" type = "button" value = "  Send  "  onclick="f_click()"> </input>
+            <input id = "find_text"  name = "find_text" ></imput>
+            <input name = "btn_find" type = "button" value = "  Find  "  onclick="find_click()"> </input>
+          </form>
+        </body>
+</html>
+
+<script>
+var auto_refresh = setInterval("f_update_post()", 2000);
+
+function f_update_post() {
+    ajax('{{=URL('default', 'read_post')}}', ['find_text'], 'post_table')
+}
+function f_click() {
+    ajax('{{=URL('default', 'input_post')}}', ['post_text','find_text'], 'post_table')
+    element = document.getElementById("post_text")
+    element.value = ""
+}
+function find_click() {
+    ajax('{{=URL('default', 'find_post')}}', ['find_text'], 'post_table')
+}
+</script>

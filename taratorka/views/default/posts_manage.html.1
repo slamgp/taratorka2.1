@@ -1,0 +1,21 @@
+{{extend 'layout.html'}}
+{{=response.toolbar()}}
+<html>
+    <head><h1>{{=message}}</h1> </head>
+    <form>
+        <body>
+        </body>
+</html>
+    <form  id = "formInput" name = "formInput"  ajax=True >
+        <textarea name = "post_table" rows = 30 cols= 120 readonly> {{=text}} </textarea>
+        <input id = "post_text"  name = "post_text"  size = 120 maxlenght = 120> </imput>
+        <input name = "btn_send" type = "button" value = "  Send post  "  onclick="f_click()"> </input>
+    </form>
+
+<textarea id="target"></textarea>
+
+<script type='text/javascript'>
+function f_click() {
+    ajax('{{=URL('default', 'input_post')}}', ['post_text'], 'target')
+}
+</script>
